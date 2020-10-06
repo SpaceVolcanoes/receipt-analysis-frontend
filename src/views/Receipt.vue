@@ -4,6 +4,24 @@
     <li>User: {{ $data.data.userId }}</li>
     <li>Issuer: {{ $data.data.issuer }}</li>
   </ul>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Cost</th>
+        <th>Created at</th>
+        <th>Modified at</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="entry in $data.data.entries" v-bind:key="entry.id">
+        <td>{{ entry.name }}</td>
+        <td>{{ entry.cost }}</td>
+        <td>{{ entry.createdAt.substring(0, 10) }}</td>
+        <td>{{ entry.modifiedAt.substring(0, 10) }}</td>
+      </tr>
+    </tbody>
+  </table>
 </template>
 
 <script>
