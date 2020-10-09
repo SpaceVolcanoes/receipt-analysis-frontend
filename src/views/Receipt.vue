@@ -29,7 +29,7 @@
       </tr>
     </tbody>
   </table>
-  <img :src="'http://localhost:8080/files/' + $data.data.fileName" />
+  <img :src="'/api/files/' + $data.data.fileName" />
 </template>
 
 <script>
@@ -48,7 +48,7 @@ export default {
   },
   created() {
     axios
-      .get("http://localhost:8080/receipt/2")
+      .get("/api/receipt/" + this.$route.params.id)
       .then(res => {
         this.data = res["data"];
       })
@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     sendData: function() {
-      axios.put("http://localhost:8080/receipt/2", this.data);
+      axios.put("/api/receipt/" + this.data.id, this.data);
     }
   }
 };
