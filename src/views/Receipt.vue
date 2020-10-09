@@ -2,8 +2,18 @@
   <ul>
     <li>Receipt: {{ $data.data.id }}</li>
     <li>User: {{ $data.data.userId }}</li>
-    <li>Issuer: {{ $data.data.issuer }}</li>
-    <li>Issued at: {{ $data.data.issuedAt.substring(0, 10) }}</li>
+    <li>
+      Issuer: <input v-if="editing.issuer" v-model="$data.data.issuer"
+        @blur="editing.issuer = false; sendData()"
+        @keyup.enter="editing.issuer = false; sendData()">
+      <label v-else @click="editing.issuer = true">{{ $data.data.issuer }}</label>
+    </li>
+    <li>
+      Issued at: <input v-if="editing.issuedAt" v-model="$data.data.issuedAt"
+        @blur="editing.issuedAt = false; sendData()"
+        @keyup.enter="editing.issuedAt = false; sendData()">
+      <label v-else @click="editing.issuedAt = true">{{ $data.data.issuedAt.substring(0, 10) }}</label>
+    </li>
   </ul>
   <table>
     <thead>
@@ -29,7 +39,11 @@ export default {
   name: "Receipt",
   data() {
     return {
-      data: {}
+      data: {},
+      editing: {
+        issuer: false,
+        issuedAt: false
+      }
     };
   },
   created() {
@@ -39,9 +53,13 @@ export default {
         this.data = res["data"];
       })
       .catch(err => {
-        alert(Object.keys(err));
-        alert(err["response"]);
+        alert(err);
       });
+  },
+  methods: {
+    sendData: function() {
+      axios.put("http://localhost:8080/receipt/2", this.data);
+    }
   }
 };
 </script>
