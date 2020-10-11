@@ -62,7 +62,7 @@ export default {
     issuedAtUpdate: function(newValue) {
       this.data.issuedAt = newValue;
       this.update();
-    },
+    }
   }
 };
 </script>
