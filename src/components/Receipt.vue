@@ -2,18 +2,8 @@
   <ul>
     <li>Receipt: {{ $data.data.id }}</li>
     <li>User: {{ $data.data.userId }}</li>
-    <li>
-      Issuer: <input v-if="editing.issuer" v-model="$data.data.issuer"
-        @blur="editing.issuer = false; sendData()"
-        @keyup.enter="editing.issuer = false; sendData()">
-      <label v-else @click="editing.issuer = true">{{ $data.data.issuer }}</label>
-    </li>
-    <li>
-      Issued at: <input v-if="editing.issuedAt" v-model="$data.data.issuedAt"
-        @blur="editing.issuedAt = false; sendData()"
-        @keyup.enter="editing.issuedAt = false; sendData()">
-      <label v-else @click="editing.issuedAt = true">{{ $data.data.issuedAt.substring(0, 10) }}</label>
-    </li>
+    <Editable @updateInner="issuerUpdate" :content="$data.data.issuer" type="Issuer" />
+    <Editable @updateInner="issuedAtUpdate" :content="$data.data.issuedAt" type="Issued at" limit="10" />
   </ul>
   <table>
     <thead>
@@ -33,10 +23,15 @@
 </template>
 
 <script>
+import Editable from "@/components/Editable.vue";
 import axios from "axios";
 
 export default {
   name: "Receipt",
+  components: {
+    Editable
+  },
+  props: {},
   data() {
     return {
       data: {},
@@ -57,9 +52,17 @@ export default {
       });
   },
   methods: {
-    sendData: function() {
+    update: function() {
       axios.put("/api/receipt/" + this.data.id, this.data);
-    }
+    },
+    issuerUpdate: function(newValue) {
+      this.data.issuer = newValue;
+      this.update();
+    },
+    issuedAtUpdate: function(newValue) {
+      this.data.issuedAt = newValue;
+      this.update();
+    },
   }
 };
 </script>
