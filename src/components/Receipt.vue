@@ -48,7 +48,7 @@ export default {
         this.data = res["data"];
       })
       .catch(err => {
-        alert(err);
+        console.log(err);
       });
   },
   methods: {
@@ -62,7 +62,7 @@ export default {
     issuedAtUpdate: function(newValue) {
       this.data.issuedAt = newValue;
       this.update();
-    },
+    }
   }
 };
 </script>
