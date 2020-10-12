@@ -48,7 +48,7 @@ export default {
         this.data = res["data"];
       })
       .catch(err => {
-        alert(err);
+        console.log(err);
       });
   },
   methods: {

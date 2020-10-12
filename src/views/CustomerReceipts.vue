@@ -12,8 +12,7 @@
         <td>{{ entry.numberOfEntries }}</td>
         <td>{{ entry.totalCostOfEntries }}</td>
         <td>{{ entry.issuedAt.substring(0, 10) }}</td>
-
-        <td><a href="/receipt">Detailed View</a></td>
+        <td><a v-bind:href="'/receipt/' + entry.id">Detailed View</a></td>
       </tr>
     </tbody>
   </table>
@@ -31,22 +30,14 @@ export default {
   },
   created() {
     axios
-      .get("http://localhost:8080/customer/1/receipts")
+      .get("/api/customer/" + this.$route.params.id + "/receipts")
       .then(res => {
         this.data = res["data"];
       })
       .catch(err => {
-        alert(Object.keys(err));
-        alert(err["response"]);
+        console.log(Object.keys(err));
+        console.log(err["response"]);
       });
   }
 };
 </script>
-
-<style scoped>
-tr {
-  font-size: 14pt;
-  text-align: left;
-  color: gray;
-}
-</style>
