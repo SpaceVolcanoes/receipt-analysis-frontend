@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
+    "serve-proxy": "vue-cli-service serve --proxy=true",
+    "serve-poll": "vue-cli-service serve --poll=true",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
@@ -12,7 +14,8 @@
     "axios": "^0.20.0",
     "vue": "^3.0.0-0",
     "vue-axios": "^3.0.1",
-    "vue-router": "^4.0.0-0"
+    "vue-router": "^4.0.0-0",
+    "yargs": "^16.0.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-eslint": "~4.5.0",
