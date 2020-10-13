@@ -20,12 +20,12 @@ export default {
   },
   data() {
     const data = {
-      id: Number,
       name: String,
       cost: Number
     };
     if (this.initial) {
       Object.assign(data, this.initial);
+      delete data.receipt.entries; // Avoid circular references
     }
     return data;
   },
@@ -44,16 +44,42 @@ export default {
   },
   emits: ["child-deleted"],
   watch: {
-    name: function() {
-      console.log("updated name", this.name);
+    name: function(newValue, oldValue) {
+      this.update(err => {
+        console.error(err);
+        this.cost = oldValue;
+      });
     },
-    cost: function() {
-      console.log("updated cost", this.cost);
+    cost: function(newValue, oldValue) {
+      this.update(err => {
+        console.error(err);
+        this.cost = oldValue;
+      });
     }
   },
   methods: {
+    create: function(onError) {
+      axios
+        .post("/api/entry/", this.$data)
+        .then(res => {
+          this.id = res["data"];
+        })
+        .catch(onError);
+    },
+    update: function(onError) {
+      if (this.id) {
+        const payload = { ...this.$data };
+        delete payload.receipt; // This ought not to be updated after creation
+        axios.put("/api/entry/" + this.id, payload).catch(onError);
+      } else {
+        this.create(onError);
+      }
+    },
     deleteEntry: function() {
       this.$emit("child-deleted", this.initial);
+      if (this.id) {
+        axios.delete("/api/entry/" + this.id);
+      }
     }
   }
 };

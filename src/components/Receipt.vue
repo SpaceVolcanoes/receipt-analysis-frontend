@@ -1,26 +1,26 @@
 <template>
-  <div class="columns">
-    <div class="column is-one-fifth">Receipt:</div>
-    <div class="column">{{ $data.data.id }}</div>
+  <div class="section">
+    <div class="columns">
+      <div class="column is-one-fifth">Receipt:</div>
+      <div class="column">{{ $data.data.id }}</div>
+    </div>
+    <div class="columns">
+      <div class="column is-one-fifth">User:</div>
+      <div class="column">{{ $data.data.customer.name }}</div>
+    </div>
+    <div class="columns">
+      <div class="column is-one-fifth">Issuer:</div>
+      <div class="column">
+        <input class="input" type="text" v-model.lazy="$data.data.issuer" />
+      </div>
+    </div>
+    <div class="columns">
+      <div class="column is-one-fifth">Issued at:</div>
+      <div class="column">
+        <input class="input" type="text" v-model.lazy="$data.data.issuedAt" />
+      </div>
+    </div>
   </div>
-  <div class="columns">
-    <div class="column is-one-fifth">User:</div>
-    <div class="column">{{ $data.data.customer.name }}</div>
-  </div>
-  <Editable
-    @updateInner="issuerUpdate"
-    v-if="$data.data.issuer"
-    :content="$data.data.issuer"
-    type="Issuer"
-  />
-  <Editable
-    @updateInner="issuedAtUpdate"
-    v-if="$data.data.issuedAt"
-    :content="$data.data.issuedAt"
-    type="Issued at"
-    :limit="10"
-  />
-
   <div class="section">
     <table class="table is-hoverable table is-fullwidth">
       <thead>
@@ -32,30 +32,30 @@
       </thead>
       <tbody>
         <tr v-for="entry in $data.data.entries" v-bind:key="entry.id">
-          <Entry
-            :initial="entry"
-            @child-deleted="removeEntry"
-          ></Entry>
+          <Entry :initial="entry" @child-deleted="removeEntry"></Entry>
         </tr>
       </tbody>
     </table>
-    <button class="button is-link is-outlined is-fullwidth" @click="addEntry">Add new entry</button>
+    <button class="button is-link is-outlined is-fullwidth" @click="addEntry">
+      Add new entry
+    </button>
   </div>
 
   <div class="section">
-    <img v-if="$data.data.fileName" :src="'/api/files/' + $data.data.fileName" />
+    <img
+      v-if="$data.data.fileName"
+      :src="'/api/files/' + $data.data.fileName"
+    />
   </div>
 </template>
 
 <script>
-import Editable from "@/components/Editable.vue";
 import Entry from "@/components/Entry.vue";
 import axios from "axios";
 
 export default {
   name: "Receipt",
   components: {
-    Editable,
     Entry
   },
   props: {},
@@ -80,23 +80,28 @@ export default {
         console.log(err);
       });
   },
+  watch: {
+    "data.issuer": function() {
+      this.update();
+    },
+    "data.issuedAt": function() {
+      this.update();
+    }
+  },
   methods: {
     update: function() {
       axios.put("/api/receipt/" + this.data.id, this.data);
-    },
-    issuerUpdate: function(newValue) {
-      this.data.issuer = newValue;
-      this.update();
-    },
-    issuedAtUpdate: function(newValue) {
-      this.data.issuedAt = newValue;
-      this.update();
     },
     removeEntry: function(entry) {
       this.data.entries = this.data.entries.filter(e => e !== entry);
     },
     addEntry: function() {
-      this.data.entries.push({ name: "", cost: 0, quantity: 1 });
+      this.data.entries.push({
+        name: "",
+        cost: 0,
+        quantity: 1,
+        receipt: this.data
+      });
     }
   }
 };

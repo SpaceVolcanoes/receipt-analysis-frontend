@@ -72,10 +72,14 @@ export default {
         url: "/api/receipt",
         data: formData,
         config: { headers: { "Content-Type": "multipart/form-data" } }
-      }).then(response => {
-        const id = response.data;
-        this.$router.push({ name: "ReceiptDetail", params: { id } });
-      });
+      })
+        .then(response => {
+          const id = response.data;
+          this.$router.push({ name: "ReceiptDetail", params: { id } });
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   }
 };
