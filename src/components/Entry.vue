@@ -6,7 +6,9 @@
     <input class="input" type="text" v-model.lazy="$data.cost" />
   </td>
   <td>
-    <button class="button is-link is-outlined is-danger" @click="deleteEntry">delete</button>
+    <button class="button is-link is-outlined is-danger" @click="deleteEntry">
+      delete
+    </button>
   </td>
 </template>
 

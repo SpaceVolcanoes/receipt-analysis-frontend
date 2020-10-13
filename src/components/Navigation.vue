@@ -1,11 +1,17 @@
 <template>
   <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-      <a class="navbar-item" href="https://bulma.io">
+      <a class="navbar-item" href="/">
         <img alt="Vue logo" src="../assets/logo.png" />
       </a>
 
-      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <a
+        role="button"
+        class="navbar-burger burger"
+        aria-label="menu"
+        aria-expanded="false"
+        data-target="navbarBasicExample"
+      >
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
@@ -14,7 +20,9 @@
 
     <div id="navbarBasicExample" class="navbar-menu">
       <div class="navbar-start">
-        <router-link v-for="route in $router.getRoutes()" v-bind:key="route.path" class="navbar-item" :to=route.path>{{ route.name }}</router-link>
+        <router-link class="navbar-item" to="/">Home</router-link>
+        <router-link class="navbar-item" :to="defaultCustomerUrl">CustomerReceipts</router-link>
+        <router-link class="navbar-item" to="/about">About</router-link>
       </div>
       <div class="navbar-end">
         <div class="navbar-item">
@@ -34,6 +42,11 @@
 
 <script>
 export default {
-  name: "Navigation"
+  name: "Navigation",
+  data() {
+    return {
+      defaultCustomerUrl: "/customer/1/receipts"
+    };
+  }
 };
 </script>
