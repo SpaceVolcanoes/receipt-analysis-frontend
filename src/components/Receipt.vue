@@ -21,27 +21,30 @@
     :limit="10"
   />
 
-  <table class="table is-hoverable table is-fullwidth">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Price</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="entry in $data.data.entries" v-bind:key="entry.id">
-        <Entry
-          :initial="entry"
-          @child-deleted="removeEntry"
-        ></Entry>
-      </tr>
-    </tbody>
-  </table>
+  <div class="section">
+    <table class="table is-hoverable table is-fullwidth">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Price</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="entry in $data.data.entries" v-bind:key="entry.id">
+          <Entry
+            :initial="entry"
+            @child-deleted="removeEntry"
+          ></Entry>
+        </tr>
+      </tbody>
+    </table>
+    <button class="button is-link is-outlined is-fullwidth" @click="addEntry">Add new entry</button>
+  </div>
 
-  <button class="button is-link is-outlined is-fullwidth" @click="addEntry">Add new entry</button>
-
-  <img v-if="$data.data.fileName" :src="'/api/files/' + $data.data.fileName" />
+  <div class="section">
+    <img v-if="$data.data.fileName" :src="'/api/files/' + $data.data.fileName" />
+  </div>
 </template>
 
 <script>
