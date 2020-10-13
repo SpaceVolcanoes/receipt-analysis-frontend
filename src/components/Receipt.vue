@@ -96,6 +96,9 @@ export default {
       this.data.entries = this.data.entries.filter(e => e !== entry);
     },
     addEntry: function() {
+      if (!this.data.entries) {
+        this.data.entries = [];
+      }
       this.data.entries.push({
         name: "",
         cost: 0,
