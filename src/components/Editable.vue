@@ -1,22 +1,25 @@
 <template>
-  <li>
-    {{ type }}:
-    <input
-      v-if="$data.editing"
-      v-model="$data.innerContent"
-      @blur="
-        $data.editing = false;
-        this.$emit('updateInner', $data.innerContent);
-      "
-      @keyup.enter="
-        $data.editing = false;
-        this.$emit('updateInner', $data.innerContent);
-      "
-    />
-    <label v-else @click="$data.editing = true">{{
-      $data.innerContent.substring(0, this.limit)
-    }}</label>
-  </li>
+  <div class="columns">
+    <div v-if="type" class="column is-one-fifth">
+      <label>{{ type }}:</label>
+    </div>
+    <div class="column">
+      <input
+        :class="editing"
+        type="text"
+        v-model="$data.innerContent"
+        @focusin="$data.editing = 'input is-focused'"
+        @blur="
+          $data.editing = 'input';
+          this.$emit('updateInner', $data.innerContent);
+        "
+        @keyup.enter="
+          $data.editing = 'input';
+          this.$emit('updateInner', $data.innerContent);
+        "
+      />
+    </div>
+  </div>
 </template>
 
 <script>
@@ -32,7 +35,7 @@ export default {
   },
   data() {
     return {
-      editing: false,
+      editing: "input",
       innerContent: this.content.slice()
     };
   }

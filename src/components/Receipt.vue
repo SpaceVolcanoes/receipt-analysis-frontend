@@ -1,40 +1,66 @@
 <template>
-  <ul>
-    <li>Receipt: {{ $data.data.id }}</li>
-    <li>User: {{ $data.data.userId }}</li>
-    <Editable @updateInner="issuerUpdate" :content="$data.data.issuer" type="Issuer" />
-    <Editable @updateInner="issuedAtUpdate" :content="$data.data.issuedAt" type="Issued at" limit="10" />
-  </ul>
-  <table>
+  <div class="columns">
+    <div class="column is-one-fifth">Receipt:</div>
+    <div class="column">{{ $data.data.id }}</div>
+  </div>
+  <div class="columns">
+    <div class="column is-one-fifth">User:</div>
+    <div class="column">{{ $data.data.customer.name }}</div>
+  </div>
+  <Editable
+    @updateInner="issuerUpdate"
+    v-if="$data.data.issuer"
+    :content="$data.data.issuer"
+    type="Issuer"
+  />
+  <Editable
+    @updateInner="issuedAtUpdate"
+    v-if="$data.data.issuedAt"
+    :content="$data.data.issuedAt"
+    type="Issued at"
+    :limit="10"
+  />
+
+  <table class="table is-hoverable table is-fullwidth">
     <thead>
       <tr>
         <th>Name</th>
-        <th>Cost</th>
+        <th>Price</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="entry in $data.data.entries" v-bind:key="entry.id">
-        <td>{{ entry.name }}</td>
-        <td>{{ entry.cost }}</td>
+        <Entry
+          :initial="entry"
+          @child-deleted="removeEntry"
+        ></Entry>
       </tr>
     </tbody>
   </table>
-  <img :src="'/api/files/' + $data.data.fileName" />
+
+  <button class="button is-link is-outlined is-fullwidth" @click="addEntry">Add new entry</button>
+
+  <img v-if="$data.data.fileName" :src="'/api/files/' + $data.data.fileName" />
 </template>
 
 <script>
 import Editable from "@/components/Editable.vue";
+import Entry from "@/components/Entry.vue";
 import axios from "axios";
 
 export default {
   name: "Receipt",
   components: {
-    Editable
+    Editable,
+    Entry
   },
   props: {},
   data() {
     return {
-      data: {},
+      data: {
+        customer: {}
+      },
       editing: {
         issuer: false,
         issuedAt: false
@@ -62,6 +88,12 @@ export default {
     issuedAtUpdate: function(newValue) {
       this.data.issuedAt = newValue;
       this.update();
+    },
+    removeEntry: function(entry) {
+      this.data.entries = this.data.entries.filter(e => e !== entry);
+    },
+    addEntry: function() {
+      this.data.entries.push({ name: "", cost: 0, quantity: 1 });
     }
   }
 };

@@ -48,11 +48,12 @@ export default {
       const formData = new FormData(this.$refs.ReceiptUpload);
       axios({
         method: "post",
-        url: "/api/files",
+        url: "/api/receipt",
         data: formData,
         config: { headers: { "Content-Type": "multipart/form-data" } }
-      }).then(resp => {
-        this.id = resp.data;
+      }).then(response => {
+        console.log(response.data);
+        this.id = response.data;
       });
     }
   }

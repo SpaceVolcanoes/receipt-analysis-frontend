@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
-import ReceiptView from "../views/ReceiptView.vue";
+import ReceiptDetail from "../views/ReceiptDetail.vue";
 
 const routes = [
   {
@@ -20,8 +20,8 @@ const routes = [
   },
   {
     path: "/receipt/:id",
-    name: "ReceiptView",
-    component: ReceiptView
+    name: "ReceiptDetail",
+    component: ReceiptDetail
   }
 ];
 
