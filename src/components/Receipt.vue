@@ -96,14 +96,14 @@ export default {
       this.data.entries = this.data.entries.filter(e => e !== entry);
     },
     addEntry: function() {
-      if (!this.data.entries) {
+      if (this.data.entries === undefined) {
         this.data.entries = [];
       }
       this.data.entries.push({
         name: "",
         cost: 0,
         quantity: 1,
-        receipt: this.data
+        receipt: { ...this.data }
       });
     }
   }

@@ -27,10 +27,10 @@
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="buttons">
-            <a class="button is-primary">
+            <a class="button is-primary" disabled>
               <strong>Sign up</strong>
             </a>
-            <a class="button is-light">
+            <a class="button is-light" disabled>
               Log in
             </a>
           </div>
