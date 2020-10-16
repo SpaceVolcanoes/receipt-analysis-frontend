@@ -2,27 +2,27 @@
   <div class="section">
     <div class="columns">
       <div class="column is-one-fifth">Receipt:</div>
-      <div class="column">{{ $data.data.id }}</div>
+      <div class="column">{{ id }}</div>
     </div>
     <div class="columns">
       <div class="column is-one-fifth">User:</div>
-      <div class="column">{{ $data.data.customer.name }}</div>
+      <div class="column">{{ customer.name }}</div>
     </div>
     <div class="columns">
       <div class="column is-one-fifth">Issuer:</div>
       <div class="column">
-        <input class="input" type="text" v-model.lazy="$data.data.issuer" />
+        <input class="input" type="text" v-model.lazy="issuer" />
       </div>
     </div>
     <div class="columns">
       <div class="column is-one-fifth">Issued at:</div>
       <div class="column">
-        <input class="input" type="text" v-model.lazy="$data.data.issuedAt" />
+        <input class="input" type="text" v-model.lazy="issuedAt" />
       </div>
     </div>
   </div>
   <div class="section">
-    <table class="table is-hoverable table is-fullwidth">
+    <table class="table is-hoverable is-fullwidth">
       <thead>
         <tr>
           <th>Name</th>
@@ -31,7 +31,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="entry in $data.data.entries" v-bind:key="entry.id">
+        <tr v-for="entry in entries" v-bind:key="entry.id">
           <Entry :initial="entry" @child-deleted="removeEntry"></Entry>
         </tr>
       </tbody>
@@ -42,10 +42,7 @@
   </div>
 
   <div class="section">
-    <img
-      v-if="$data.data.fileName"
-      :src="'/api/files/' + $data.data.fileName"
-    />
+    <img v-if="fileName" :src="'/api/files/' + fileName" />
   </div>
 </template>
 
@@ -61,49 +58,45 @@ export default {
   props: {},
   data() {
     return {
-      data: {
-        customer: {}
-      },
-      editing: {
-        issuer: false,
-        issuedAt: false
-      }
+      id: 0,
+      customer: {},
+      issuer: "",
+      issuedAt: "",
+      fileName: false,
+      entries: []
     };
   },
   created() {
     axios
       .get("/api/receipt/" + this.$route.params.id)
       .then(res => {
-        this.data = res["data"];
+        Object.assign(this, res["data"]);
       })
       .catch(err => {
         console.log(err);
       });
   },
   watch: {
-    "data.issuer": function() {
+    issuer: function() {
       this.update();
     },
-    "data.issuedAt": function() {
+    issuedAt: function() {
       this.update();
     }
   },
   methods: {
     update: function() {
-      axios.put("/api/receipt/" + this.data.id, this.data);
+      axios.put("/api/receipt/" + this.id, this);
     },
     removeEntry: function(entry) {
-      this.data.entries = this.data.entries.filter(e => e !== entry);
+      this.entries = this.entries.filter(e => e !== entry);
     },
     addEntry: function() {
-      if (this.data.entries === undefined) {
-        this.data.entries = [];
-      }
-      this.data.entries.push({
+      this.entries.push({
         name: "",
         cost: 0,
         quantity: 1,
-        receipt: { ...this.data }
+        receipt: { ...this }
       });
     }
   }
