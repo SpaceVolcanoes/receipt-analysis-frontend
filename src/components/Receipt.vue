@@ -68,7 +68,7 @@ export default {
   },
   created() {
     axios
-      .get("/api/receipt/" + this.$route.params.id)
+      .get("/api/receipts/" + this.$route.params.id)
       .then(res => {
         Object.assign(this, res["data"]);
       })
@@ -86,7 +86,7 @@ export default {
   },
   methods: {
     update: function() {
-      axios.put("/api/receipt/" + this.id, this);
+      axios.put("/api/receipts/" + this.id, this);
     },
     removeEntry: function(entry) {
       this.entries = this.entries.filter(e => e !== entry);

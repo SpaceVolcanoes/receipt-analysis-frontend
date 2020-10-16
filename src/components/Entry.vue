@@ -36,7 +36,7 @@ export default {
       return;
     }
     axios
-      .get("/api/entry/" + this.$route.params.id)
+      .get("/api/entries/" + this.$route.params.id)
       .then(res => {
         Object.assign(this, res["data"]);
       })
@@ -62,7 +62,7 @@ export default {
   methods: {
     create: function(onError) {
       axios
-        .post("/api/entry/", this.$data)
+        .post("/api/entries/", this.$data)
         .then(res => {
           this.id = res["data"];
         })
@@ -72,7 +72,7 @@ export default {
       if (this.id) {
         const payload = { ...this.$data };
         delete payload.receipt; // This ought not to be updated after creation
-        axios.put("/api/entry/" + this.id, payload).catch(onError);
+        axios.put("/api/entries/" + this.id, payload).catch(onError);
       } else {
         this.create(onError);
       }
@@ -80,7 +80,7 @@ export default {
     deleteEntry: function() {
       this.$emit("child-deleted", this.initial);
       if (this.id) {
-        axios.delete("/api/entry/" + this.id);
+        axios.delete("/api/entries/" + this.id);
       }
     }
   }

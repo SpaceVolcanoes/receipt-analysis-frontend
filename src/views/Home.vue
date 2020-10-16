@@ -69,7 +69,7 @@ export default {
       const formData = new FormData(this.$refs.ReceiptUpload);
       axios({
         method: "post",
-        url: "/api/receipt",
+        url: "/api/receipts",
         data: formData,
         config: { headers: { "Content-Type": "multipart/form-data" } }
       })

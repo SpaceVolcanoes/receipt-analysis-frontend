@@ -12,7 +12,7 @@
         <td>{{ entry.numberOfEntries }}</td>
         <td>{{ entry.totalCostOfEntries }}</td>
         <td>{{ entry.issuedAt.substring(0, 10) }}</td>
-        <td><a v-bind:href="'/receipt/' + entry.id">Detailed View</a></td>
+        <td><a v-bind:href="'/receipts/' + entry.id">Detailed View</a></td>
       </tr>
     </tbody>
   </table>
@@ -30,7 +30,7 @@ export default {
   },
   created() {
     axios
-      .get("/api/customer/" + this.$route.params.id + "/receipts")
+      .get("/api/customers/" + this.$route.params.id + "/receipts")
       .then(res => {
         this.data = res["data"];
       })
