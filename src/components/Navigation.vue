@@ -45,7 +45,7 @@ export default {
   name: "Navigation",
   data() {
     return {
-      defaultCustomerUrl: "/customer/1/receipts"
+      defaultCustomerUrl: "/customers/1/receipts"
     };
   }
 };
