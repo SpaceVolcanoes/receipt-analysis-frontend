@@ -6,7 +6,7 @@
 import Receipt from "@/components/Receipt.vue";
 
 export default {
-  name: "ReceiptView",
+  name: "ReceiptDetail",
   components: {
     Receipt
   }

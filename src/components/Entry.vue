@@ -1,0 +1,88 @@
+<template>
+  <td>
+    <input class="input" type="text" v-model.lazy="$data.name" />
+  </td>
+  <td>
+    <input class="input" type="text" v-model.lazy="$data.cost" />
+  </td>
+  <td>
+    <button class="button is-link is-outlined is-danger" @click="deleteEntry">
+      delete
+    </button>
+  </td>
+</template>
+
+<script>
+import axios from "axios";
+
+export default {
+  name: "Entry",
+  props: {
+    initial: Object
+  },
+  data() {
+    const data = {
+      name: String,
+      cost: Number
+    };
+    if (this.initial) {
+      Object.assign(data, this.initial);
+      delete data.receipt.entries; // Avoid circular references
+    }
+    return data;
+  },
+  created() {
+    if (this.initial) {
+      return;
+    }
+    axios
+      .get("/api/entry/" + this.$route.params.id)
+      .then(res => {
+        Object.assign(this, res["data"]);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  },
+  emits: ["child-deleted"],
+  watch: {
+    name: function(newValue, oldValue) {
+      this.update(err => {
+        console.error(err);
+        this.cost = oldValue;
+      });
+    },
+    cost: function(newValue, oldValue) {
+      this.update(err => {
+        console.error(err);
+        this.cost = oldValue;
+      });
+    }
+  },
+  methods: {
+    create: function(onError) {
+      axios
+        .post("/api/entry/", this.$data)
+        .then(res => {
+          this.id = res["data"];
+        })
+        .catch(onError);
+    },
+    update: function(onError) {
+      if (this.id) {
+        const payload = { ...this.$data };
+        delete payload.receipt; // This ought not to be updated after creation
+        axios.put("/api/entry/" + this.id, payload).catch(onError);
+      } else {
+        this.create(onError);
+      }
+    },
+    deleteEntry: function() {
+      this.$emit("child-deleted", this.initial);
+      if (this.id) {
+        axios.delete("/api/entry/" + this.id);
+      }
+    }
+  }
+};
+</script>
