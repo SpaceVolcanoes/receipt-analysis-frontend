@@ -12,7 +12,7 @@
 
 <script>
 import Statistics from "@/components/Statistics.vue";
-import StaticReceipt from "@/components/StaticReceipt";
+import StaticReceipt from "@/components/StaticReceipt.vue";
 
 export default {
   name: "Home",
