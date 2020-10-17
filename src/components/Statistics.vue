@@ -1,0 +1,48 @@
+<template>
+  <div class="section">
+    <div class="columns">
+      <div class="column is-one-fifth">Amount of customers:</div>
+      <div class="column">{{ customerAmount }}</div>
+    </div>
+    <div class="columns">
+      <div class="column is-one-fifth">Amount of receipts:</div>
+      <div class="column">{{ receiptAmount }}</div>
+    </div>
+    <div class="columns">
+      <div class="column is-one-fifth">Amount of entries:</div>
+      <div class="column">{{ entryAmount }}</div>
+    </div>
+    <div class="columns">
+      <div class="column is-one-fifth">Average entries per receipt:</div>
+      <div class="column">{{ entriesPerReceipt }}</div>
+    </div>
+  </div>
+</template>
+
+<script>
+import axios from "axios";
+
+export default {
+  name: "Statistics",
+  components: {},
+  props: {},
+  data() {
+    return {
+      customerAmount: 0,
+      receiptAmount: 0,
+      entryAmount: 0,
+      entriesPerReceipt: 0
+    };
+  },
+  created() {
+    axios
+      .get("/api/statistics")
+      .then(res => {
+        Object.assign(this, res["data"]);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+};
+</script>
