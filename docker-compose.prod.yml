@@ -6,10 +6,22 @@ services:
     image: receiptanalysis/frontend
     restart: always
     container_name: "analysis-frontend"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Stockholm
+      - URL=receipt.modalstudio.com
+      - VALIDATION=http
+      - EMAIL=jaak.kytt@gmail.com
+      - DHLEVEL=2048
+      - ONLY_SUBDOMAINS=false
+      - STAGING=false
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - analysis-front-logs:/logs
+      - nginx-config:/config
 
   backend:
     image: receiptanalysis/backend
@@ -43,3 +55,4 @@ volumes:
   analysis-back-logs:
   analysis-back-files:
   analysis-front-logs:
+  nginx-config:
