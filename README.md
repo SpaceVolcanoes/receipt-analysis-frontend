@@ -27,3 +27,8 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### Build production container
+```
+docker build -t receiptanalysis/frontend .
+```
