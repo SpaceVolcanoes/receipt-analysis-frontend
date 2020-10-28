@@ -33,6 +33,9 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/analysis
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=development
+      - HOST=receipt.modalstudio.com
+      - BASEPATH=/api
+      - LOGGING_LEVEL_ROOT=INFO
     volumes:
       - analysis-back-logs:/logs
       - analysis-back-files:/files
