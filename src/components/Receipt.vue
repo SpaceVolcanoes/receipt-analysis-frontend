@@ -86,7 +86,14 @@ export default {
   },
   methods: {
     update: function() {
-      axios.put("/api/receipts/" + this.id, this);
+      axios
+        .put("/api/receipts/" + this.id, {
+          issuer: this.issuer,
+          issuedAt: this.issuedAt
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     removeEntry: function(entry) {
       this.entries = this.entries.filter(e => e !== entry);
@@ -96,7 +103,7 @@ export default {
         name: "",
         cost: 0,
         quantity: 1,
-        receipt: { ...this }
+        receipt: { id: this.id }
       });
     }
   }
