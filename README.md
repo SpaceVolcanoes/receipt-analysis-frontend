@@ -41,5 +41,5 @@ docker logout
 ### Update in production env
 ```
 docker pull receiptanalysis/frontend
-docker stop analysis-frontend && docker rm analysis-frontend && docker-compose up -d frontend
+docker stop analysis-frontend && docker rm analysis-frontend && docker-compose -f docker-compose.frontend.yml up -d frontend
 ```
