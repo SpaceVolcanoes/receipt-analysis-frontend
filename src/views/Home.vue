@@ -4,40 +4,8 @@
       <label class="label">Select file to upload</label>
       <div class="control">
         <div class="file is-boxed">
-          <label class="file-label">
-            <input
-              class="file-input"
-              @change="image = $event.target.files[0]"
-              type="file"
-              name="file"
-              id="fileToUpload"
-              accept="image/*"
-            />
-            <span class="file-cta">
-              <span class="file-icon">
-                <i class="fas fa-upload"></i>
-              </span>
-              <span class="file-label">Choose a file…</span>
-            </span>
-          </label>
+          <Imager @image-saved="upload" />
         </div>
-      </div>
-    </div>
-    <div class="field">
-      <div class="control">
-        <button
-          class="button is-link"
-          type="submit"
-          @click.prevent="upload"
-          name="submit"
-        >
-          Upload file
-        </button>
-      </div>
-    </div>
-    <div class="field">
-      <div class="control">
-        <img v-if="$data.imageSrc" :src="$data.imageSrc" />
       </div>
     </div>
   </form>
@@ -45,33 +13,22 @@
 
 <script>
 import axios from "axios";
+import Imager from "@/components/Imager.vue";
 
 export default {
   name: "Home",
-  data() {
-    return {
-      image: false,
-      imageSrc: false
-    };
-  },
-  watch: {
-    image: function() {
-      const reader = new FileReader();
-      let that = this;
-      reader.onload = function() {
-        that.imageSrc = reader.result;
-      };
-      reader.readAsDataURL(this.image);
-    }
+  components: {
+    Imager
   },
   methods: {
-    upload: function() {
-      const formData = new FormData(this.$refs.ReceiptUpload);
+    upload: function(imageData) {
       axios({
         method: "post",
         url: "/api/receipts",
-        data: formData,
-        config: { headers: { "Content-Type": "multipart/form-data" } }
+        data: imageData,
+        config: {
+          headers: { "Content-Type": "text/plain; charset=utf-8" }
+        }
       })
         .then(response => {
           const id = response.data;
