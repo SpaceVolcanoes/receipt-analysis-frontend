@@ -4,7 +4,7 @@
       <img
         class="imager"
         src=""
-        style="min-width: 300px; min-height: 200px; width: 300px;"
+        style="min-width: 300px; min-height: 200px; width: 400px"
       />
     </div>
   </div>
@@ -51,6 +51,16 @@ export default {
         });
       }
     );
+  },
+  beforeUnmount() {
+    // eslint-disable-next-line no-undef
+    $(
+      ".toolbar-tooltip, .imager-edit-container, .imager-selector-container, .modaljs-overlay, .modaljs-wrapper"
+    ).remove();
+
+    this.$unloadScript("../external/imager/imagerJs.js");
+    this.$unloadScript("https://code.jquery.com/jquery-migrate-1.2.1.min.js");
+    this.$unloadScript("https://code.jquery.com/jquery-1.10.1.min.js");
   },
   emits: ["image-saved"],
   methods: {

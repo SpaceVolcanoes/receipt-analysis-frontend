@@ -22,12 +22,14 @@ export default {
   },
   methods: {
     upload: function(imageData) {
+      let parts = imageData.split(",");
+
       axios({
         method: "post",
-        url: "/api/receipts",
-        data: imageData,
+        url: "/api/receipts/base64",
+        data: { type: parts[0], data: parts[1] },
         config: {
-          headers: { "Content-Type": "text/plain; charset=utf-8" }
+          headers: { "Content-Type": "application/json; charset=utf-8" }
         }
       })
         .then(response => {

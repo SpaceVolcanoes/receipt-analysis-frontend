@@ -3138,9 +3138,9 @@ var ImagerJs = {
             pluginsConfig: {},
             detectTouch: null,
             waitingCursor: 'wait',
-            imageSizeForPerformanceWarning: 1000000, // 1 MB
-            maxImageWidth: 2048,
-            maxImageHeight: 2048
+            imageSizeForPerformanceWarning: 10000000, // 10 MB
+            maxImageWidth: 4048,
+            maxImageHeight: 4048
         };
 
         options = options ? options : {};
