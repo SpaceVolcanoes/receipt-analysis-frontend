@@ -1,4 +1,7 @@
 <template>
+  <button class="button is-link is-outlined is-danger" @click="deleteReceipt">
+    delete
+  </button>
   <div class="section">
     <div class="columns">
       <div class="column is-one-fifth">Receipt:</div>
@@ -105,6 +108,12 @@ export default {
         quantity: 1,
         receipt: { id: this.id }
       });
+    },
+    deleteReceipt: function() {
+      if (this.id) {
+        axios.delete("/api/receipts/" + this.id);
+        this.$router.push({ name: 'CustomerReceipts', params: { id: 1 } });
+      }
     }
   }
 };
