@@ -29,6 +29,7 @@ export default {
     };
   },
   created() {
+    this.data = "";
     axios
       .get("/api/customers/" + this.$route.params.id + "/receipts")
       .then(res => {
