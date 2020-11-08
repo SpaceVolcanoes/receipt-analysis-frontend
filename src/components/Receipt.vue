@@ -1,7 +1,4 @@
 <template>
-  <button class="button is-link is-outlined is-danger" @click="deleteReceipt">
-    delete
-  </button>
   <div class="section">
     <div class="columns">
       <div class="column is-one-fifth">Receipt:</div>
@@ -21,6 +18,14 @@
       <div class="column is-one-fifth">Issued at:</div>
       <div class="column">
         <input class="input" type="text" v-model.lazy="issuedAt" />
+      </div>
+    </div>
+    <div class="columns">
+      <div class="column"></div>
+      <div class="column is-one-fifth">
+        <button class="button is-link is-outlined is-danger is-pulled-right" @click="deleteReceipt">
+          delete
+        </button>
       </div>
     </div>
   </div>
@@ -110,13 +115,11 @@ export default {
       });
     },
     deleteReceipt: function() {
-      if (this.id) {
-        axios
-          .delete("/api/receipts/" + this.id)
-          .then(() => {
-            this.$router.push({ name: 'CustomerReceipts', params: { id: 1 } });
-          });
-      }
+      axios
+        .delete("/api/receipts/" + this.id)
+        .then(() => {
+          this.$router.push({ name: 'CustomerReceipts', params: { id: this.customer.id } });
+        });
     }
   }
 };
