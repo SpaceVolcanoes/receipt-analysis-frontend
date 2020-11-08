@@ -73,7 +73,6 @@ export default {
         plugins: [
           "Rotate",
           "Crop",
-          "Resize",
           "Save",
           "Toolbar",
           "Delete",
