@@ -111,8 +111,11 @@ export default {
     },
     deleteReceipt: function() {
       if (this.id) {
-        axios.delete("/api/receipts/" + this.id);
-        this.$router.push({ name: 'CustomerReceipts', params: { id: 1 } });
+        axios
+          .delete("/api/receipts/" + this.id)
+          .then(() => {
+            this.$router.push({ name: 'CustomerReceipts', params: { id: 1 } });
+          });
       }
     }
   }
