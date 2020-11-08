@@ -20,6 +20,14 @@
         <input class="input" type="text" v-model.lazy="issuedAt" />
       </div>
     </div>
+    <div class="columns">
+      <div class="column"></div>
+      <div class="column is-one-fifth">
+        <button class="button is-link is-outlined is-danger is-pulled-right" @click="deleteReceipt">
+          delete
+        </button>
+      </div>
+    </div>
   </div>
   <div class="section">
     <table class="table is-hoverable is-fullwidth">
@@ -105,6 +113,13 @@ export default {
         quantity: 1,
         receipt: { id: this.id }
       });
+    },
+    deleteReceipt: function() {
+      axios
+        .delete("/api/receipts/" + this.id)
+        .then(() => {
+          this.$router.push({ name: 'CustomerReceipts', params: { id: this.customer.id } });
+        });
     }
   }
 };
