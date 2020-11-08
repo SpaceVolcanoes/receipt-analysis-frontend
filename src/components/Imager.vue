@@ -1,11 +1,7 @@
 <template>
   <div id="imagers">
     <div class="image-container">
-      <img
-        class="imager"
-        src=""
-        style="min-width: 300px; min-height: 200px; width: 400px"
-      />
+      <img class="imager" src="" />
     </div>
   </div>
 </template>
@@ -27,6 +23,9 @@
   display: inline-block;
   margin-top: 30px;
   margin-bottom: 100px;
+  min-width: 300px;
+  min-height: 200px;
+  width: 400px
 }
 
 .image-container {
@@ -70,14 +69,7 @@ export default {
       let that = this;
 
       let options = {
-        plugins: [
-          "Rotate",
-          "Crop",
-          "Save",
-          "Toolbar",
-          "Delete",
-          "Undo"
-        ],
+        plugins: ["Rotate", "Crop", "Save", "Toolbar", "Delete", "Undo"],
         editModeCss: {},
         pluginsConfig: {
           Delete: {
