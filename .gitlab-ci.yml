@@ -16,7 +16,6 @@ docker build:
   only:
     refs:
       - main
-
   services:
     - docker:19.03.8-dind
   before_script:
