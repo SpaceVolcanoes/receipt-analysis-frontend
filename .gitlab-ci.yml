@@ -13,6 +13,10 @@ docker build:
   stage: build and push container
   variables:
     DOCKER_TLS_CERTDIR: ""
+  only:
+    refs:
+      - main
+
   services:
     - docker:19.03.8-dind
   before_script:
@@ -28,6 +32,9 @@ deploy:
   tags:
     - space
   stage: deploy
+  only:
+    refs:
+      - main
   before_script:
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y)'
     - eval $(ssh-agent -s)
@@ -42,4 +49,4 @@ deploy:
     - scp docker-compose.prod.yml ubuntu@13.53.140.53:/home/ubuntu/docker-compose.frontend.yml
     - ssh ubuntu@13.53.140.53 "sudo docker pull receiptanalysis/frontend"
     - ssh ubuntu@13.53.140.53 "sudo docker stop analysis-frontend && sudo docker rm analysis-frontend && sudo docker-compose -f docker-compose.frontend.yml up -d frontend"
-    - ssh ubuntu@13.53.140.53 "sudo docker logout"
+
