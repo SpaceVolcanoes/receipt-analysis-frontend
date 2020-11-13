@@ -4,6 +4,7 @@ services:
 
 stages:
   - build and push container
+  - test
   - deploy
 
 docker build:
@@ -26,6 +27,18 @@ docker build:
     - echo $DOCKER_PASS | docker login -u$DOCKER_USER --password-stdin
     - docker push receiptanalysis/frontend
     - docker logout
+
+test:
+  tags:
+    - space
+  stage: test
+  image: node:latest
+  before_script:
+    - echo "Install npm"
+    - npm install
+    - echo "Running tests"
+  script:
+    - npm run test:unit
 
 deploy:
   tags:
