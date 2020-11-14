@@ -1,0 +1,64 @@
+image: docker:stable
+services:
+  - docker:dind
+
+stages:
+  - build and push container
+  - test
+  - deploy
+
+docker build:
+  tags:
+    - space
+  image: docker:19.03.8
+  stage: build and push container
+  variables:
+    DOCKER_TLS_CERTDIR: ""
+  only:
+    refs:
+      - main
+  services:
+    - docker:19.03.8-dind
+  before_script:
+    - echo "Building and pushing the frontend container"
+    - docker info
+  script:
+    - docker build -t receiptanalysis/frontend .
+    - echo $DOCKER_PASS | docker login -u$DOCKER_USER --password-stdin
+    - docker push receiptanalysis/frontend
+    - docker logout
+
+test:
+  tags:
+    - space
+  stage: test
+  image: node:latest
+  before_script:
+    - echo "Install npm"
+    - npm install
+    - echo "Running tests"
+  script:
+    - npm run test:unit
+
+deploy:
+  tags:
+    - space
+  stage: deploy
+  only:
+    refs:
+      - main
+  before_script:
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y)'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan -H 13.53.140.53 >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    - echo "Deploying"
+  script:
+    - scp docker-compose.prod.yml ubuntu@13.53.140.53:/home/ubuntu/docker-compose.frontend.yml
+    - ssh ubuntu@13.53.140.53 "sudo docker pull receiptanalysis/frontend"
+    - ssh ubuntu@13.53.140.53 "sudo docker stop analysis-frontend && sudo docker rm analysis-frontend && sudo docker-compose -f docker-compose.frontend.yml up -d frontend"
+

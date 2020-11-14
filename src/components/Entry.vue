@@ -27,7 +27,6 @@ export default {
     };
     if (this.initial) {
       Object.assign(data, this.initial);
-      delete data.receipt.entries; // Avoid circular references
     }
     return data;
   },
@@ -62,7 +61,13 @@ export default {
   methods: {
     create: function(onError) {
       axios
-        .post("/api/entries/", this.$data)
+        .post("/api/entries/", {
+          category: this.category,
+          cost: this.cost,
+          name: this.name,
+          quantity: this.quantity,
+          receipt: this.receipt
+        })
         .then(res => {
           this.id = res["data"];
         })
@@ -70,9 +75,14 @@ export default {
     },
     update: function(onError) {
       if (this.id) {
-        const payload = { ...this.$data };
-        delete payload.receipt; // This ought not to be updated after creation
-        axios.put("/api/entries/" + this.id, payload).catch(onError);
+        axios
+          .put("/api/entries/" + this.id, {
+            category: this.category,
+            cost: this.cost,
+            name: this.name,
+            quantity: this.quantity
+          })
+          .catch(onError);
       } else {
         this.create(onError);
       }
