@@ -1,7 +1,7 @@
 <template>
   <div id="imagers">
     <div class="image-container">
-      <img class="imager" src="" />
+      <img class="imager" src="" :key="componentKey" />
     </div>
   </div>
 </template>
@@ -25,7 +25,7 @@
   margin-bottom: 100px;
   min-width: 300px;
   min-height: 200px;
-  width: 400px
+  width: 400px;
 }
 
 .image-container {
@@ -38,7 +38,13 @@
 <script>
 export default {
   name: "Imager",
+  data() {
+    return {
+      componentKey: 0
+    };
+  },
   created() {
+    this.componentKey += 1;
     this.$loadScript("https://code.jquery.com/jquery-1.10.1.min.js").then(
       () => {
         this.$loadScript(
