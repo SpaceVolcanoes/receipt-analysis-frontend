@@ -4072,12 +4072,10 @@ var ImagerJs = {
         this.canvasSizeLimit = 1 * 1024 * 1024;
         if (this.canvasSizeLimit) {
             if (this.canvas.width * this.canvas.height > this.canvasSizeLimit) {
-                console.warn('adjustCanvasSize(): canvas size is too big : ', this.canvas.width, this.canvas.height);
                 var ratio = 0.95 * this.canvasSizeLimit / (this.canvas.width * this.canvas.height);
 
                 this.canvas.width = this.canvas.width * ratio;
                 this.canvas.height = this.canvas.height * ratio;
-                console.warn('adjustCanvasSize(): canvas was reduced to : ', this.canvas.width, this.canvas.height);
             }
         }
 
