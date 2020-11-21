@@ -23,7 +23,10 @@
     <div class="columns">
       <div class="column"></div>
       <div class="column is-one-fifth">
-        <button class="button is-link is-outlined is-danger is-pulled-right" @click="deleteReceipt">
+        <button
+          class="button is-link is-outlined is-danger is-pulled-right"
+          @click="deleteReceipt"
+        >
           delete
         </button>
       </div>
@@ -115,11 +118,12 @@ export default {
       });
     },
     deleteReceipt: function() {
-      axios
-        .delete("/api/receipts/" + this.id)
-        .then(() => {
-          this.$router.push({ name: 'CustomerReceipts', params: { id: this.customer.id } });
+      axios.delete("/api/receipts/" + this.id).then(() => {
+        this.$router.push({
+          name: "CustomerReceipts",
+          params: { id: this.customer.id }
         });
+      });
     }
   }
 };
