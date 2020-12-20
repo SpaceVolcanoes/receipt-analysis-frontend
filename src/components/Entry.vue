@@ -22,8 +22,8 @@ export default {
   },
   data() {
     const data = {
-      name: String,
-      cost: Number
+      name: "",
+      cost: 0
     };
     if (this.initial) {
       Object.assign(data, this.initial);
