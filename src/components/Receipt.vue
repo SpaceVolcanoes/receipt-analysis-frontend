@@ -58,8 +58,8 @@
 </template>
 
 <script>
-import Entry from "@/components/Entry.vue";
-import axios from "axios";
+import Entry from "@/components/Entry";
+import Api from "@/components/Api";
 
 export default {
   name: "Receipt",
@@ -78,8 +78,7 @@ export default {
     };
   },
   created() {
-    axios
-      .get("/api/receipts/" + this.$route.params.id)
+    Api.get("/api/receipts/" + this.$route.params.id)
       .then(res => {
         Object.assign(this, res["data"]);
       })
@@ -97,14 +96,12 @@ export default {
   },
   methods: {
     update: function() {
-      axios
-        .put("/api/receipts/" + this.id, {
-          issuer: this.issuer,
-          issuedAt: this.issuedAt
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      Api.put("/api/receipts/" + this.id, {
+        issuer: this.issuer,
+        issuedAt: this.issuedAt
+      }).catch(err => {
+        console.log(err);
+      });
     },
     removeEntry: function(entry) {
       this.entries = this.entries.filter(e => e !== entry);
@@ -118,7 +115,7 @@ export default {
       });
     },
     deleteReceipt: function() {
-      axios.delete("/api/receipts/" + this.id).then(() => {
+      Api.delete("/api/receipts/" + this.id).then(() => {
         this.$router.push({
           name: "CustomerReceipts",
           params: { id: this.customer.id }

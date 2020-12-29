@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import Api from "@/components/Api";
 
 export default {
   name: "Entry",
@@ -34,8 +34,7 @@ export default {
     if (this.initial) {
       return;
     }
-    axios
-      .get("/api/entries/" + this.$route.params.id)
+    Api.get("/api/entries/" + this.$route.params.id)
       .then(res => {
         Object.assign(this, res["data"]);
       })
@@ -60,14 +59,13 @@ export default {
   },
   methods: {
     create: function(onError) {
-      axios
-        .post("/api/entries/", {
-          category: this.category,
-          cost: this.cost,
-          name: this.name,
-          quantity: this.quantity,
-          receipt: this.receipt
-        })
+      Api.post("/api/entries/", {
+        category: this.category,
+        cost: this.cost,
+        name: this.name,
+        quantity: this.quantity,
+        receipt: this.receipt
+      })
         .then(res => {
           this.id = res["data"];
         })
@@ -75,14 +73,12 @@ export default {
     },
     update: function(onError) {
       if (this.id) {
-        axios
-          .put("/api/entries/" + this.id, {
-            category: this.category,
-            cost: this.cost,
-            name: this.name,
-            quantity: this.quantity
-          })
-          .catch(onError);
+        Api.put("/api/entries/" + this.id, {
+          category: this.category,
+          cost: this.cost,
+          name: this.name,
+          quantity: this.quantity
+        }).catch(onError);
       } else {
         this.create(onError);
       }
@@ -90,7 +86,7 @@ export default {
     deleteEntry: function() {
       this.$emit("child-deleted", this.initial);
       if (this.id) {
-        axios.delete("/api/entries/" + this.id);
+        Api.delete("/api/entries/" + this.id);
       }
     }
   }

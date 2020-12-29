@@ -2,32 +2,28 @@
   <div class="section">
     <h3 class="title is-3">Register</h3>
     <h2 class="title is-2">Say no to poverty</h2>
-    <Form
-      :validation-schema="schema"
-      v-slot="{ errors }"
-      @submit="onSubmit"
-    >
+    <Form :validation-schema="schema" v-slot="{ errors }" @submit="onSubmit">
       <div class="columns">
         <div class="column is-one-fifth">Your name:</div>
-        <div class="column"><Field name="name" as="input" /></div>
+        <div class="column"><Field class="input" name="name" as="input" /></div>
         <span>{{ errors.name }}</span>
       </div>
       <div class="columns">
         <div class="column is-one-fifth">Your email:</div>
-        <div class="column"><Field name="email" as="input" /></div>
+        <div class="column"><Field class="input" name="email" as="input" /></div>
         <span>{{ errors.email }}</span>
       </div>
       <div class="columns">
         <div class="column is-one-fifth">Password:</div>
         <div class="column">
-          <Field name="password" as="input" type="password" />
+          <Field class="input" name="password" as="input" type="password" />
         </div>
         <span>{{ errors.password }}</span>
       </div>
       <div class="columns">
         <div class="column is-one-fifth">Repeat password:</div>
         <div class="column">
-          <Field name="repeatPassword" as="input" type="password" />
+          <Field class="input" name="repeatPassword" as="input" type="password" />
         </div>
         <span>{{ errors.repeatPassword }}</span>
       </div>
@@ -41,9 +37,11 @@
 </template>
 
 <script>
-import axios from "axios";
 import { Field, Form } from "vee-validate";
 import * as yup from "yup";
+import Api from "./Api";
+import Session from "@/components/Session";
+import router from "@/router";
 
 export default {
   name: "Register",
@@ -73,18 +71,17 @@ export default {
   },
   methods: {
     onSubmit: function(values) {
-      axios
-        .post("/api/auth/register/", {
-          name: values.name,
-          email: values.email,
-          password: values.password
+      Api.post("/api/auth/register/", {
+        name: values.name,
+        email: values.email,
+        password: values.password
+      })
+        .then(result => {
+          Session.update({ ...result.data, active: true });
+          router.push({ name: "Home" });
         })
-        .then(res => {
-          console.log(res);
-          console.log("TODO: Do login stuff.");
-        })
-        .catch(res => {
-          console.log(res);
+        .catch(error => {
+          console.error(error);
         });
     }
   }

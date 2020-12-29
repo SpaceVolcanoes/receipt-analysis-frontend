@@ -1,8 +1,8 @@
 import { mount } from "@vue/test-utils";
-import axios from "axios";
+import Api from "@/components/Api";
 import Entry from "@/components/Entry.vue";
 
-jest.mock("axios");
+jest.mock("@/components/Api");
 
 describe("Entry", () => {
   it("saves data from prop", () => {
@@ -27,13 +27,13 @@ describe("Entry", () => {
       }
     });
     await entry.setData({ id: 2 });
-    axios.put.mockImplementation(() => Promise.resolve());
+    Api.put.mockImplementation(() => Promise.resolve());
 
     await entry.setData({ name: "Jaak" });
     await entry.setData({ cost: 10 });
 
-    const nameCall = axios.put.mock.calls[0];
-    const costCall = axios.put.mock.calls[1];
+    const nameCall = Api.put.mock.calls[0];
+    const costCall = Api.put.mock.calls[1];
 
     expect(nameCall[0]).toBe("/api/entries/2");
     expect(costCall[0]).toBe("/api/entries/2");
@@ -57,6 +57,6 @@ describe("Entry", () => {
 
     await entry.find("button").trigger("click");
 
-    expect(axios.delete).toHaveBeenCalledWith("/api/entries/2");
+    expect(Api.delete).toHaveBeenCalledWith("/api/entries/2");
   });
 });
