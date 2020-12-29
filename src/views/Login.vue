@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import Session from "../components/Session";
+import Session from "@/components/Session";
 
 export default {
   name: "Login",

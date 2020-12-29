@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import Api from "./Api";
+import Api from "@/components/Api";
 
 export default {
   name: "Statistics",

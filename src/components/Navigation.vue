@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import Session from "./Session";
+import Session from "@/components/Session";
 
 export default {
   name: "Navigation",

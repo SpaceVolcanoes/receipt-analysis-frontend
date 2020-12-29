@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import Statistics from "../components/Statistics";
-import StaticReceipt from "../components/StaticReceipt";
+import Statistics from "@/components/Statistics";
+import StaticReceipt from "@/components/StaticReceipt";
 
 export default {
   name: "Home",

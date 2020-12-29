@@ -58,8 +58,8 @@
 </template>
 
 <script>
-import Entry from "./Entry";
-import Api from "./Api";
+import Entry from "@/components/Entry";
+import Api from "@/components/Api";
 
 export default {
   name: "Receipt",

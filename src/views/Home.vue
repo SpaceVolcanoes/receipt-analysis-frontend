@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import Imager from "../components/Imager";
-import Api from "../components/Api";
+import Imager from "@/components/Imager";
+import Api from "@/components/Api";
 
 export default {
   name: "Home",

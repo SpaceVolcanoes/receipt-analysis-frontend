@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import Receipt from "../components/Receipt";
+import Receipt from "@/components/Receipt";
 
 export default {
   name: "ReceiptDetail",

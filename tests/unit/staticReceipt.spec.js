@@ -1,12 +1,12 @@
 import { mount } from "@vue/test-utils";
-import axios from "axios";
+import Api from "@/components/Api";
 import StaticReceipt from "@/components/StaticReceipt.vue";
 
-jest.mock("axios");
+jest.mock("@/components/Api");
 
 describe("Static Receipt", () => {
   it("saves data from response to component", async () => {
-    axios.get.mockImplementationOnce(() =>
+    Api.get.mockImplementationOnce(() =>
       Promise.resolve({
         data: {
           id: 4,

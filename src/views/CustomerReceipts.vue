@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import Api from "../components/Api";
+import Api from "@/components/Api";
 
 export default {
   name: "CustomerReceipts",

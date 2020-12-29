@@ -1,6 +1,6 @@
 <script>
 import axios from "axios";
-import Session from "../components/Session";
+import Session from "@/components/Session";
 
 function attachHeader(config) {
   if (!Session.state.active) {

@@ -21,7 +21,7 @@ const read = function(field) {
   return JSON.parse(stored)[field];
 };
 
-export default {
+const session = {
   name: "Session",
   created() {
     if (!localStorage.getItem(key)) {
@@ -40,22 +40,26 @@ export default {
       username: username,
       password: password
     }).then(response => {
-      localStorage.setItem(key, JSON.stringify(response.data));
-      this.state.id = response.data.id;
-      this.state.username = response.data.username;
-      this.state.token = response.data.token;
-      this.state.role = response.data.role;
-      this.state.active = true;
+      write({ ...response.data, active: true });
     });
   },
   logout: function() {
-    localStorage.setItem(key, JSON.stringify(guest));
-    this.state.id = guest.id;
-    this.state.username = guest.username;
-    this.state.token = guest.token;
-    this.state.role = guest.role;
-    this.state.active = guest.active;
+    write(guest);
     router.push({ name: "Home" });
+  },
+  update: function(data) {
+    write(data);
   }
 };
+
+const write = function(data) {
+  localStorage.setItem(key, JSON.stringify(data));
+  session.state.id = data.id;
+  session.state.username = data.username;
+  session.state.token = data.token;
+  session.state.role = data.role;
+  session.state.active = data.active;
+};
+
+export default session;
 </script>
