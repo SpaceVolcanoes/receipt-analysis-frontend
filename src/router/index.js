@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
+import Register from "../views/Register.vue";
 import ReceiptDetail from "../views/ReceiptDetail.vue";
 import CustomerReceipts from "../views/CustomerReceipts.vue";
 
@@ -18,6 +19,11 @@ const routes = [
     component: function() {
       return import(/* webpackChunkName: "about" */ "../views/About.vue");
     }
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: Register
   },
   {
     path: "/customers/:id/receipts",
