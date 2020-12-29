@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import Api from "../components/Api";
 
 export default {
   name: "CustomerReceipts",
@@ -29,14 +29,13 @@ export default {
     };
   },
   created() {
-    axios
-      .get("/api/customers/" + this.$route.params.id + "/receipts")
-      .then(res => {
-        this.data = res["data"];
+    Api.get("/api/customers/" + this.$route.params.id + "/receipts")
+      .then(request => {
+        this.data = request.data;
       })
-      .catch(err => {
-        console.log(Object.keys(err));
-        console.log(err["response"]);
+      .catch(error => {
+        console.log(Object.keys(error));
+        console.log(error.response);
       });
   },
   methods: {

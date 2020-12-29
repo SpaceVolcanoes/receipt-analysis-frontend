@@ -44,6 +44,12 @@ export default {
     };
   },
   created() {
+    Object.keys(localStorage).forEach(function(key) {
+      if (key.startsWith("image_")) {
+        localStorage.removeItem(key);
+      }
+    });
+
     this.componentKey += 1;
     this.$loadScript("https://code.jquery.com/jquery-1.10.1.min.js").then(
       () => {

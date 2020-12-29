@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import axios from "axios";
-import Imager from "@/components/Imager.vue";
+import Imager from "../components/Imager";
+import Api from "../components/Api";
 
 export default {
   name: "Home",
@@ -23,15 +23,13 @@ export default {
   methods: {
     upload: function(imageData) {
       let parts = imageData.split(",");
-
-      axios({
-        method: "post",
-        url: "/api/receipts/base64",
-        data: { type: parts[0], data: parts[1] },
-        config: {
+      Api.post(
+        "/api/receipts/base64",
+        { type: parts[0], data: parts[1] },
+        {
           headers: { "Content-Type": "application/json; charset=utf-8" }
         }
-      })
+      )
         .then(response => {
           const id = response.data;
           this.$router.push({ name: "ReceiptDetail", params: { id } });
