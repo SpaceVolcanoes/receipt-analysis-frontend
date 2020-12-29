@@ -3,11 +3,6 @@ const { argv } = require("yargs");
 module.exports = {
   devServer: {
     port: 8008
-  },
-  configureWebpack: {
-    resolve: {
-      mainFields: ["main", "module"]
-    }
   }
 };
 
