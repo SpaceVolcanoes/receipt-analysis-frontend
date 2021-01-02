@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
 import Register from "../views/Register.vue";
 import ReceiptDetail from "../views/ReceiptDetail.vue";
+import EntryDetail from "../views/EntryDetail.vue";
 import CustomerReceipts from "../views/CustomerReceipts.vue";
 import Login from "../views/Login";
 
@@ -32,6 +33,11 @@ const routes = [
     path: "/receipts/:id",
     name: "ReceiptDetail",
     component: ReceiptDetail
+  },
+  {
+    path: "/entries/:id",
+    name: "EntryDetail",
+    component: EntryDetail
   },
   {
     path: "/login",
