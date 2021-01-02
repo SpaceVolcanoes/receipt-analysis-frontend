@@ -1,14 +1,18 @@
 <template>
   <td>
-    <input class="input" type="text" v-model.lazy="$data.name" />
+    <input v-if="edit" class="input" type="text" v-model.lazy="$data.name" />
+    <div v-if="!edit">{{ $data.name }}</div>
   </td>
   <td>
-    <input class="input" type="text" v-model.lazy="$data.cost" />
+    <input v-if="edit" class="input" type="text" v-model.lazy="$data.cost" />
+    <div v-if="!edit">{{ $data.cost }}</div>
   </td>
   <td>
-    <button class="button is-link is-outlined is-danger" @click="deleteEntry">
+    <button v-if="edit" class="button is-link is-outlined is-danger" @click="deleteEntry">
       delete
     </button>
+    // todo pmst see võiks vastava entry lehele viia
+    <router-link v-if="!edit" class="button is-link" to="/entries">View</router-link>
   </td>
 </template>
 
@@ -18,7 +22,8 @@ import Api from "@/components/Api";
 export default {
   name: "Entry",
   props: {
-    initial: Object
+    initial: Object,
+    edit: Boolean
   },
   data() {
     const data = {

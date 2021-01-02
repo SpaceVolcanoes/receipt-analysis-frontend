@@ -42,7 +42,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="entry in entries" v-bind:key="entry.id">
+        <tr v-for="entry in entries" v-bind:key="entry.id" v-bind:edit="false">
           <Entry :initial="entry" @child-deleted="removeEntry"></Entry>
         </tr>
       </tbody>

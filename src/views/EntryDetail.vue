@@ -10,7 +10,7 @@
       </thead>
       <tbody>
         <tr v-for="entry in entries" v-bind:key="entry.id">
-          <Entry :initial="entry" @child-deleted="removeEntry"></Entry>
+          <Entry :edit="true" :initial="entry" @child-deleted="removeEntry"></Entry>
         </tr>
       </tbody>
     </table>
