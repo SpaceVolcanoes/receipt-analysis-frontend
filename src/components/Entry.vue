@@ -11,8 +11,7 @@
     <button v-if="edit" class="button is-link is-outlined is-danger" @click="deleteEntry">
       delete
     </button>
-    // todo pmst see võiks vastava entry lehele viia
-    <router-link v-if="!edit" class="button is-link" to="/entries">View</router-link>
+    <router-link v-if="!edit" class="button is-link" :to="entryUrl">View</router-link>
   </td>
 </template>
 
@@ -93,6 +92,11 @@ export default {
       if (this.id) {
         Api.delete("/api/entries/" + this.id);
       }
+    }
+  },
+  computed: {
+    entryUrl() {
+      return "/entries/" + this.id;
     }
   }
 };
