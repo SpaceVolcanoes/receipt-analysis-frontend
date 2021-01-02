@@ -4,6 +4,7 @@ import Register from "../views/Register.vue";
 import ReceiptDetail from "../views/ReceiptDetail.vue";
 import CustomerReceipts from "../views/CustomerReceipts.vue";
 import Login from "../views/Login";
+import Images from "../views/Images";
 
 const routes = [
   {
@@ -37,6 +38,11 @@ const routes = [
     path: "/login",
     name: "Login",
     component: Login
+  },
+  {
+    path: "/images",
+    name: "Images",
+    component: Images
   }
 ];
 

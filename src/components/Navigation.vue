@@ -25,6 +25,9 @@
           >CustomerReceipts</router-link
         >
         <router-link class="navbar-item" to="/about">About</router-link>
+        <router-link v-if="role === 'ADMIN'" class="navbar-item" to="/images"
+          >Images</router-link
+        >
       </div>
       <div class="navbar-end">
         <div v-if="active" class="navbar-item">
@@ -65,6 +68,9 @@ export default {
     },
     username() {
       return Session.state.username;
+    },
+    role() {
+      return Session.state.role;
     },
     customerUrl() {
       return "/customers/" + Session.state.id + "/receipts";
