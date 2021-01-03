@@ -1,17 +1,14 @@
 <template>
   <td>
-    <input v-if="edit" class="input" type="text" v-model.lazy="$data.name" />
-    <div v-if="!edit">{{ $data.name }}</div>
+    <input class="input" type="text" v-model.lazy="$data.name" />
   </td>
   <td>
-    <input v-if="edit" class="input" type="text" v-model.lazy="$data.cost" />
-    <div v-if="!edit">{{ $data.cost }}</div>
+    <input class="input" type="text" v-model.lazy="$data.cost" />
   </td>
   <td>
-    <button v-if="edit" class="button is-link is-outlined is-danger" @click="deleteEntry">
+    <button class="button is-link is-outlined is-danger" @click="deleteEntry">
       delete
     </button>
-    <router-link v-if="!edit" class="button is-link" :to="entryUrl">View</router-link>
   </td>
 </template>
 
@@ -21,8 +18,7 @@ import Api from "@/components/Api";
 export default {
   name: "Entry",
   props: {
-    initial: Object,
-    edit: Boolean
+    initial: Object
   },
   data() {
     const data = {
@@ -92,11 +88,6 @@ export default {
       if (this.id) {
         Api.delete("/api/entries/" + this.id);
       }
-    }
-  },
-  computed: {
-    entryUrl() {
-      return "/entries/" + this.id;
     }
   }
 };

@@ -6,11 +6,17 @@
           <th>Name</th>
           <th>Price</th>
           <th></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="entry in entries" v-bind:key="entry.id">
-          <Entry :edit="true" :initial="entry" @child-deleted="removeEntry"></Entry>
+          <Entry :initial="entry" @child-deleted="removeEntry"></Entry>
+          <td>
+            <router-link class="button is-link is-outlined" :to="'/receipts/' + entry.receiptId">
+              Receipt
+            </router-link>
+          </td>
         </tr>
       </tbody>
     </table>
