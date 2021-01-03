@@ -11,7 +11,7 @@
         <td>{{ entry.issuer }}</td>
         <td>{{ entry.numberOfEntries }}</td>
         <td>{{ entry.totalCostOfEntries }}</td>
-        <td>{{ entry.issuedAt.substring(0, 10) }}</td>
+        <td>{{ formatDate(entry.issuedAt) }}</td>
         <td><a v-bind:href="'/receipts/' + entry.id">Detailed View</a></td>
       </tr>
     </tbody>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import Api from "@/components/Api";
 
 export default {
   name: "CustomerReceipts",
@@ -29,15 +29,22 @@ export default {
     };
   },
   created() {
-    axios
-      .get("/api/customers/" + this.$route.params.id + "/receipts")
-      .then(res => {
-        this.data = res["data"];
+    Api.get("/api/customers/" + this.$route.params.id + "/receipts")
+      .then(request => {
+        this.data = request.data;
       })
-      .catch(err => {
-        console.log(Object.keys(err));
-        console.log(err["response"]);
+      .catch(error => {
+        console.log(Object.keys(error));
+        console.log(error.response);
       });
+  },
+  methods: {
+    formatDate: function(value) {
+      if (typeof value === "string") {
+        return value.substring(0, 10);
+      }
+      return value;
+    }
   }
 };
 </script>

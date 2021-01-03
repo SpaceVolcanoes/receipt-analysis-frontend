@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import Api from "@/components/Api";
 
 export default {
   name: "Statistics",
@@ -35,13 +35,12 @@ export default {
     };
   },
   created() {
-    axios
-      .get("/api/statistics")
-      .then(res => {
-        Object.assign(this, res["data"]);
+    Api.get("/api/statistics")
+      .then(response => {
+        Object.assign(this, response.data);
       })
-      .catch(err => {
-        console.log(err);
+      .catch(error => {
+        console.log(error);
       });
   }
 };

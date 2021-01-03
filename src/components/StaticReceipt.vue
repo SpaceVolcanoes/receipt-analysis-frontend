@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import Api from "@/components/Api";
 
 export default {
   name: "StaticReceipt",
@@ -49,8 +49,7 @@ export default {
     };
   },
   created() {
-    axios
-      .get("/api/receipts/4")
+    Api.get("/api/receipts/4")
       .then(res => {
         Object.assign(this, res["data"]);
       })
