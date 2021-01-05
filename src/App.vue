@@ -3,12 +3,14 @@
     {{ $route.name }}
   </h1>
   <Navigation />
+  <Alert />
   <router-view />
 </template>
 
 <script>
 import Navigation from "./components/Navigation";
+import Alert from "./components/Alert";
 export default {
-  components: { Navigation }
+  components: { Navigation, Alert }
 };
 </script>

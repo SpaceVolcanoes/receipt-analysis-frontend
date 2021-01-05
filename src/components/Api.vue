@@ -6,10 +6,11 @@ function attachHeader(config) {
   if (!Session.state.active) {
     return config;
   }
-
+  Session.checkTimeout();
   if (!config.headers) {
     config.headers = {};
   }
+
   config.headers["Authorization"] = "Bearer " + Session.state.token;
   return config;
 }
