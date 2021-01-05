@@ -39,9 +39,16 @@ export default {
   },
   methods: {
     login: function() {
-      Session.login(this.username, this.password).then(() => {
-        this.$router.push({ name: "Home" });
-      });
+      Session.login(this.username, this.password)
+        .then(() => {
+          this.$router.push({ name: "Home" });
+        })
+        .catch(() => {
+          this.eventBus.emit("show-alert", {
+            message: "Incorrect username or password",
+            level: "danger"
+          });
+        });
     }
   }
 };

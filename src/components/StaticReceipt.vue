@@ -54,7 +54,7 @@ export default {
         Object.assign(this, res["data"]);
       })
       .catch(err => {
-        console.log(err);
+        console.log("2", err);
       });
   }
 };

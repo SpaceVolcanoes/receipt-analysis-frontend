@@ -81,6 +81,16 @@ export default {
           router.push({ name: "Home" });
         })
         .catch(error => {
+          let message = error?.response?.data;
+          if (!message) {
+            message = "Error creating a user";
+          }
+
+          this.eventBus.emit("show-alert", {
+            message: message,
+            level: "danger"
+          });
+          window.x = error;
           console.error(error);
         });
     }
