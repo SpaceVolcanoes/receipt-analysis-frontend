@@ -46,7 +46,11 @@
         <tr v-for="entry in entries" v-bind:key="entry.id" v-bind:edit="false">
           <Entry :initial="entry" @child-deleted="removeEntry"></Entry>
           <td>
-            <router-link class="button is-link is-outlined" :to="'/entries/' + entry.id">
+            <router-link
+              v-if="entry.id"
+              class="button is-link is-outlined"
+              :to="'/entries/' + entry.id"
+            >
               View
             </router-link>
           </td>

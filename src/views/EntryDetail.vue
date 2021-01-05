@@ -13,7 +13,10 @@
         <tr v-for="entry in entries" v-bind:key="entry.id">
           <Entry :initial="entry" @child-deleted="removeEntry"></Entry>
           <td>
-            <router-link class="button is-link is-outlined" :to="'/receipts/' + entry.receiptId">
+            <router-link
+              class="button is-link is-outlined"
+              :to="'/receipts/' + entry.receiptId"
+            >
               Receipt
             </router-link>
           </td>
@@ -50,7 +53,7 @@ export default {
   methods: {
     removeEntry: function(entry) {
       this.entries = this.entries.filter(e => e !== entry);
-    },
+    }
   }
-}
+};
 </script>
