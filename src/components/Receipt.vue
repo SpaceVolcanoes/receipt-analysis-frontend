@@ -58,7 +58,7 @@
     </button>
   </div>
 
-  <div class="section">
+  <div class="section has-text-centered">
     <img v-if="fileName" :src="'/api/files/' + fileName" />
   </div>
 </template>

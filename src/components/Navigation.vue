@@ -22,7 +22,7 @@
       <div class="navbar-start">
         <router-link class="navbar-item" to="/">Home</router-link>
         <router-link v-if="active" class="navbar-item" :to="customerUrl"
-          >CustomerReceipts</router-link
+          >Receipts</router-link
         >
         <router-link class="navbar-item" to="/about">About</router-link>
         <router-link v-if="role === 'ADMIN'" class="navbar-item" to="/images"
