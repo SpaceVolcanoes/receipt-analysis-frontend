@@ -1,18 +1,28 @@
 <template>
-  <table>
-    <tbody>
+  <table class="table is-striped is-fullwidth">
+    <thead>
       <tr>
         <th>Shop name</th>
         <th>#of entries</th>
         <th>Total cost</th>
         <th>Date</th>
+        <th></th>
       </tr>
+    </thead>
+    <tbody>
       <tr v-for="entry in $data.data" v-bind:key="entry.id">
         <td>{{ entry.issuer }}</td>
         <td>{{ entry.numberOfEntries }}</td>
-        <td>{{ entry.totalCostOfEntries }}</td>
+        <td>{{ formatCost(entry.totalCostOfEntries) }}</td>
         <td>{{ formatDate(entry.issuedAt) }}</td>
-        <td><a v-bind:href="'/receipts/' + entry.id">Detailed View</a></td>
+        <td>
+          <router-link
+            class="button is-link is-outlined"
+            :to="'/receipts/' + entry.id"
+          >
+            View
+          </router-link>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -39,6 +49,12 @@ export default {
       });
   },
   methods: {
+    formatCost: function(value) {
+      if (typeof value === "string" || typeof value === "number") {
+        return parseFloat(value).toFixed(2);
+      }
+      return value;
+    },
     formatDate: function(value) {
       if (typeof value === "string") {
         return value.substring(0, 10);

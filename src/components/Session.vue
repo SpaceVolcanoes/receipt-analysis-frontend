@@ -49,6 +49,17 @@ const session = {
   },
   update: function(data) {
     write(data);
+  },
+  checkTimeout: function() {
+    if (!session.state.token) {
+      return;
+    }
+    const expire = JSON.parse(
+      atob(JSON.parse(localStorage.getItem("user")).token.split(".")[1])
+    ).exp;
+    if (expire * 1000 < new Date().getTime()) {
+      this.logout();
+    }
   }
 };
 
